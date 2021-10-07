@@ -2,11 +2,11 @@
 #include <cassert>
 
 template<class T>
-class OrderedArray
+class BaseArray
 {
 public:
 	// Constructor
-	OrderedArray(int size, int growBy = 1) :
+	BaseArray(int size, int growBy = 1) :
 		m_array(NULL), m_maxSize(0), m_growSize(0), m_numElements(0)
 	{
 		if (size)	// Is this a legal size for an array?
@@ -19,7 +19,7 @@ public:
 		}
 	}
 	// Destructor
-	~OrderedArray()
+	~BaseArray()
 	{
 		if (m_array != nullptr)
 		{
@@ -27,7 +27,7 @@ public:
 			m_array = nullptr;
 		}
 	}
-	// Insertion
+	// Insertion -- Big-O = O(N)
 	void push(T val)
 	{
 		assert(m_array != nullptr);
@@ -105,12 +105,16 @@ public:
 
 		while (1)	// <-- Replaced with recursion
 		{
-			current = (lowerBound + upperBound) >> 1;
+			current = (lowerBound + upperBound) >> 1;	// Preview of bitwise operatrions. Divides by 2
 
+			// Binary search steps:
+			// Step 1: Check if the middle is the value we are looking for.
 			if (m_array[current] == searchKey)
 			{
+				// Found the item in the middle of the array. Return the index
 				return current;
 			}
+			// Step 2: Check that we've exhausted all options. Can't find the item
 			else if (lowerBound > upperBound)
 			{
 				return -1;
@@ -131,6 +135,7 @@ public:
 
 		return -1;	// Catch all return from danger.
 	}
+	// Overloaded [] operator
 	T& operator[](int index)
 	{
 		assert(m_array != nullptr && index < m_numElements);
@@ -139,7 +144,7 @@ public:
 	// Clear
 	void clear()
 	{
-		m_numElements = 0;	 // Ignore all current items in the array
+		m_numElements = 0;	 // Ignore (or forgets) all current items in the array
 	}
 	// Gets and Sets
 	int GetSize()

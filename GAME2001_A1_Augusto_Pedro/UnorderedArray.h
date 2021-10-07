@@ -28,7 +28,6 @@ public:
 		}
 	}
 	// Insertion
-	// Fast insertion for UnorderedArray -- Big-O is O(1)
 	void push(T val)
 	{
 		assert(m_array != nullptr); // Debugging purposes
@@ -59,7 +58,6 @@ public:
 
 		if (index >= m_numElements)
 		{
-			// I am trying to remove something outside of the bounds of the array
 			return;	// <-- Maybe could do some form of exception handling
 		}
 
