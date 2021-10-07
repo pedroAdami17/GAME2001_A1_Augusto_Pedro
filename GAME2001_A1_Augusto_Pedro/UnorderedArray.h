@@ -6,10 +6,10 @@ class UnorderedArray
 {
 public:
 	// Constructor
-	UnorderedArray(int size, int growBy = 1) :
+	UnorderedArray(int size, int growBy = 8) :
 		m_array(NULL), m_maxSize(0), m_growSize(0), m_numElements(0)
 	{
-		if (size)	// Is this a legal size for an array?
+		if (size)
 		{
 			m_maxSize = size;
 			m_array = new T[m_maxSize];		// Dynamically allocating an array to m_maxSize

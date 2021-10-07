@@ -6,7 +6,7 @@ class OrderedArray
 {
 public:
 	// Constructor
-	OrderedArray(int size, int growBy = 1) :
+	OrderedArray(int size, int growBy = 8) :
 		m_array(NULL), m_maxSize(0), m_growSize(0), m_numElements(0)
 	{
 		if (size)	// Is this a legal size for an array?
@@ -46,7 +46,7 @@ public:
 				break;
 			}
 		}
-
+		
 		// Step 2: Shift everything to the right of the index(i) forward by one. Work backwards
 		for (k = m_numElements; k > i; k--)
 		{
@@ -57,8 +57,27 @@ public:
 		m_array[i] = val;
 
 		m_numElements++;
-
-		// return i;
+	
+		//Remove duplicate data.
+		bool removeDuplicate = true;
+		if(removeDuplicate == true)
+		{
+			for (int i = 0; i < m_numElements; i++)
+			{
+				for (int j = i + 1; j < m_numElements; j++)
+				{
+					if (m_array[i] == m_array[j])
+					{
+						for (int k = j; k < m_numElements; k++)
+						{
+							m_array[k] = m_array[k + 1];
+						}
+						m_numElements--;
+						j--;
+					}
+				}
+			}
+		}
 	}
 	// Deletion (2 ways)
 	// Remove the last item inserted into the array
@@ -80,7 +99,7 @@ public:
 			// I am trying to remove something outside of the bounds of the array
 			return;	// <-- Maybe could do some form of exception handling
 		}
-
+		
 		for (int i = index; i < m_numElements; i++)
 		{
 			// Start at the index we want to remove.

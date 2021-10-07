@@ -27,7 +27,7 @@ public:
 			m_array = nullptr;
 		}
 	}
-	// Insertion -- Big-O = O(N)
+	// Insertion
 	void push(T val)
 	{
 		assert(m_array != nullptr);
