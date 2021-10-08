@@ -6,7 +6,8 @@ using namespace std;
 
 int main()
 {
-	OrderedArray<int> array(3);
+	OrderedArray<int>array(3);
+	//UnorderedArray<>Array<int> array(3); //Change comments to test Ordered or Unordered array.
 
 	array.push(3);
 	array.push(53);
@@ -16,7 +17,7 @@ int main()
 	array.push(87);
 	array.push(87); //<-- Duplicated value
 	array.push(15);
-	array.push(15);
+	array.push(11);
 	array.push(55);
 	array.push(11);
 	array.push(18);

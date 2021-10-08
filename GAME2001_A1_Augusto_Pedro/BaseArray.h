@@ -6,10 +6,10 @@ class BaseArray
 {
 public:
 	// Constructor
-	BaseArray(int size, int growBy = 1) :
+	BaseArray(int size, int growBy = 8) :
 		m_array(NULL), m_maxSize(0), m_growSize(0), m_numElements(0)
 	{
-		if (size)	// Is this a legal size for an array?
+		if (size)
 		{
 			m_maxSize = size;
 			m_array = new T[m_maxSize];		// Dynamically allocating an array to m_maxSize
@@ -30,35 +30,16 @@ public:
 	// Insertion
 	void push(T val)
 	{
-		assert(m_array != nullptr);
+		assert(m_array != nullptr); // Debugging purposes
 
-		if (m_numElements >= m_maxSize)
+		if (m_numElements >= m_maxSize)	// Check if the array has to expand to accommodate the new data.
 		{
 			Expand();
 		}
 
-		int i, k;	// i - Index to be inserted. k - Used for shifting purposes
-		// Step 1: Find the index to insert val
-		for (i = 0; i < m_numElements; i++)
-		{
-			if (m_array[i] > val)
-			{
-				break;
-			}
-		}
-
-		// Step 2: Shift everything to the right of the index(i) forward by one. Work backwards
-		for (k = m_numElements; k > i; k--)
-		{
-			m_array[k] = m_array[k - 1];
-		}
-
-		// Step 3: Insert val into the array at index
-		m_array[i] = val;
-
+		// My array has space for a new value. Let's add it!
+		m_array[m_numElements] = val;
 		m_numElements++;
-
-		// return i;
 	}
 	// Deletion (2 ways)
 	// Remove the last item inserted into the array
@@ -77,7 +58,6 @@ public:
 
 		if (index >= m_numElements)
 		{
-			// I am trying to remove something outside of the bounds of the array
 			return;	// <-- Maybe could do some form of exception handling
 		}
 
@@ -92,49 +72,23 @@ public:
 		}
 		m_numElements--;
 	}
-	// Searching
-	// Binary Search
-	int search(T searchKey)
-	{
-		assert(m_array != nullptr);
+	//// Searching
+	//// Linear Search
+	//int search(T val)
+	//{
+	//	assert(m_array != nullptr);
 
-		// Helper variables.
-		int lowerBound = 0;
-		int upperBound = m_numElements - 1;
-		int current = 0;
+	//	// Brute-force Search
+	//	for (int i = 0; i < m_numElements; i++)
+	//	{
+	//		if (m_array[i] == val)
+	//		{
+	//			return i;	// Return the index of where the item is located in the array
+	//		}
+	//	}
 
-		while (1)	// <-- Replaced with recursion
-		{
-			current = (lowerBound + upperBound) >> 1;	// Preview of bitwise operatrions. Divides by 2
-
-			// Binary search steps:
-			// Step 1: Check if the middle is the value we are looking for.
-			if (m_array[current] == searchKey)
-			{
-				// Found the item in the middle of the array. Return the index
-				return current;
-			}
-			// Step 2: Check that we've exhausted all options. Can't find the item
-			else if (lowerBound > upperBound)
-			{
-				return -1;
-			}
-			// Step 3: Check which half of the array the value is in.
-			else
-			{
-				if (m_array[current] < searchKey)
-				{
-					lowerBound = current + 1;	// Value may be in the upper half
-				}
-				else
-				{
-					upperBound = current - 1;	// Value may be in the lower half
-				}
-			}
-		}
-
-		return -1;	// Catch all return from danger.
-	}
+	//	return -1;
+	//}
 	// Overloaded [] operator
 	T& operator[](int index)
 	{
@@ -176,7 +130,7 @@ private:
 		}
 
 		// Create the new array
-		T* temp = new T[m_maxSize + m_growSize];
+		T* temp = new T[m_maxSize + (m_growSize++ * 2)];
 		assert(temp != nullptr);
 
 		// Copy the contents of the original array into the new array

@@ -59,8 +59,8 @@ public:
 		m_numElements++;
 	
 		//Remove duplicate data.
-		bool removeDuplicate = true;
-		if(removeDuplicate == true)
+		bool removeDuplicate = true;  //If set to false, will not remove duplicates.
+		if(removeDuplicate == true)  
 		{
 			for (int i = 0; i < m_numElements; i++)
 			{
@@ -176,7 +176,7 @@ public:
 	int SetGrowSize(int val)
 	{
 		assert(val >= 0);
-		m_growSize = m_growSize*2;
+		m_growSize = val;
 	}
 private:
 	// Private functions
@@ -190,7 +190,7 @@ private:
 		}
 
 		// Create the new array
-		T* temp = new T[m_maxSize + (m_growSize++ * 2)];
+		T* temp = new T[++m_growSize + m_maxSize]; //Expand array by increasing value.
 		assert(temp != nullptr);
 		
 		// Copy the contents of the original array into the new array
