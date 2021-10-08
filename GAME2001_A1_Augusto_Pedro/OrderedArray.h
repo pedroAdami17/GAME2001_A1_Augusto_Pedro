@@ -6,7 +6,7 @@ class OrderedArray
 {
 public:
 	// Constructor
-	OrderedArray(int size, int growBy = 8) :
+	OrderedArray(int size, int growBy = 1) :
 		m_array(NULL), m_maxSize(0), m_growSize(0), m_numElements(0)
 	{
 		if (size)	// Is this a legal size for an array?
@@ -176,7 +176,7 @@ public:
 	int SetGrowSize(int val)
 	{
 		assert(val >= 0);
-		m_growSize = val;
+		m_growSize = m_growSize*2;
 	}
 private:
 	// Private functions
@@ -190,9 +190,9 @@ private:
 		}
 
 		// Create the new array
-		T* temp = new T[m_maxSize + m_growSize];
+		T* temp = new T[m_maxSize + (m_growSize++ * 2)];
 		assert(temp != nullptr);
-
+		
 		// Copy the contents of the original array into the new array
 		memcpy(temp, m_array, sizeof(T) * m_maxSize);
 

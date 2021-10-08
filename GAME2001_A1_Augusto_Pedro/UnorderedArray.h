@@ -130,7 +130,7 @@ private:
 		}
 
 		// Create the new array
-		T* temp = new T[m_maxSize + m_growSize];
+		T* temp = new T[m_maxSize + (m_growSize++ * 2)];
 		assert(temp != nullptr);
 
 		// Copy the contents of the original array into the new array

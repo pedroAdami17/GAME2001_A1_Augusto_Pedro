@@ -14,11 +14,17 @@ int main()
 	array.push(23); // <-- Should expand here
 	array.push(82); // <-- Should expand here
 	array.push(87);
-	array.push(87);
+	array.push(87); //<-- Duplicated value
 	array.push(15);
-	int arraySize = sizeof(array) / sizeof(array[0]);
+	array.push(15);
+	array.push(55);
+	array.push(11);
+	array.push(18);
+	array.push(1);
+	array.push(19);
+	array.push(56);
+	array.push(77);
 
-	int n = array.GetSize();
 	
 	cout << "Ordered array contents: ";
 
@@ -28,8 +34,9 @@ int main()
 	}
 
 	cout << endl << endl;
-	cout << arraySize << endl;
-	cout << array.GetSize();
+	cout << array.GetSize() << endl;
+	cout << array.GetMaxSize() << endl;
+	
 
 	return 0;
 }
